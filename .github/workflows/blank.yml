@@ -18,9 +18,11 @@ jobs:
   run_tests:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Run script file
-      run: |
-         chmod +x ./scripts/test.sh
-         ./scripts/test.sh
-      shell: bash
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: root
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 80
+        script: whoami
