@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-test -e $FOLDER_PATH
-cd $FOLDER_PATH
-test -e $FOLDER_PATH/deploy.sh
+cd bin
+git clone https://github.com/chiensitendo/pro-sang-server.git
