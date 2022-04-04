@@ -35,6 +35,7 @@ jobs:
               mkdir -p ~/.ssh/
               echo "$SSH_PRIVATE_KEY" > ../private.key
               sudo chmod 600 ../private.key
+              ssh-keygen -R $SSH_KNOWN_HOSTS
               echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         shell: bash
         env:
@@ -42,8 +43,7 @@ jobs:
            SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
       - name: Use SSH key
         run: |
-          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_KNOWN_HOSTS
-          echo root@$SSH_KNOWN_HOSTS
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
