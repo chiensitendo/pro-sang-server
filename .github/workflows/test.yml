@@ -28,9 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a script
         run: |
-           cd ./.github/bin
-           chmod +x run-deploy-file.sh
-           ./run-deploy-file.sh
+           chmod +x ./.github/bin/run-deploy-file.sh
+           ./.github/bin/run-deploy-file.sh
         shell: bash
         env:
            FOLDER_NAME: ${{secrets.DEPL_FOLDER_NAME}}
