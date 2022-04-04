@@ -28,9 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a script
         run: |
-           test -e ./.github/bin/run-deploy-file.sh
-           chmod +x ./.github/bin/run-deploy-file.sh
-           ./.github/bin/run-deploy-file.sh
+           echo "Run a script"
         shell: bash
         env:
            FOLDER_NAME: ${{secrets.DEPL_FOLDER_NAME}}
@@ -56,7 +54,9 @@ jobs:
       - name: Deploy
         run: |
           scp -p -i ../private.key -o StrictHostKeyChecking=no ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd ../deploy && chmod +x deploy.sh && ./deploy.sh"
+          test -e ./.github/bin/run-deploy-file.sh
+          chmod +x ./.github/bin/run-deploy-file.sh
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS ./.github/bin/run-deploy-file.sh
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
