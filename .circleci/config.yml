@@ -7,9 +7,8 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: 
-          ssh root@103.82.20.216
-      - run: yes Yes
+      - run: |
+          ssh root@103.82.20.216 | yes Yes
 
 # Orchestrate our job run sequence
 workflows:
