@@ -17,12 +17,9 @@ on:
 jobs:
   run_tests:
     runs-on: ubuntu-20.04
-    env: 
-      key: ${{secrets.SSH_PRIVATE_KEY}}
     steps:
     - uses: actions/checkout@v2
     - name: Run script file
       run: |
-         chmod +x ./scripts/test.sh
-         ./scripts/test.sh
+         ssh root@103.82.20.216
       shell: bash
