@@ -42,7 +42,7 @@ jobs:
            SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
       - name: Use SSH key
         run: |
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "echo Hello"
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
