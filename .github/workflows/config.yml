@@ -25,14 +25,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a script
-        run: |
-           echo "Run a script"
-        shell: bash
-        env:
-           FOLDER_NAME: ${{secrets.DEPL_FOLDER_NAME}}
-
       # Runs a set of commands using the runners shell
       - name: Check scripts
         run: |
@@ -61,4 +53,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
+          DEPL_FOLDER_PATH: ${{secrets.DEPL_FOLDER_PATH}}
        
