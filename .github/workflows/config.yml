@@ -45,12 +45,12 @@ jobs:
            SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
       - name: Deploy
         run: |
-          scp -p -i ../private.key -o StrictHostKeyChecking=no ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
-          test -e ./.github/bin/run-deploy-file.sh
-          chmod +x ./.github/bin/run-deploy-file.sh
+          scp -p -i ../private.key -o StrictHostKeyChecking=no ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/$FOLDER_NAME
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd $FOLDER_PATH && chmod +x deploy.sh && ./deploy.sh"
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
-          DEPL_FOLDER_PATH: ${{secrets.DEPL_FOLDER_PATH}}
+          FOLDER_PATH: ${{secrets.DEPL_FOLDER_PATH}}
+          FOLDER_NAME: ${{secrets.DEPL_FOLDER_NAME}}
        
