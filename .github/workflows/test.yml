@@ -42,7 +42,14 @@ jobs:
            SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
       - name: Use SSH key
         run: |
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "scp ../private.key root@$SSH_KNOWN_HOSTS:/deploy"
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "echo hello"
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
+      - name: Copy File
+        run: |
+          scp -i ../private.key -o StrictHostKeyChecking=no root@$SSH_KNOWN_HOSTS:/deploy/
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
