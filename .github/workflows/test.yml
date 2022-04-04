@@ -49,7 +49,7 @@ jobs:
            SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
       - name: Deploy
         run: |
-          scp -p -i ../private.key ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
+          scp -p -i ../private.key -o StrictHostKeyChecking=no ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
           ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd ../deploy && chmod +x deploy.sh && ./deploy.sh"
         shell: bash
         env:
