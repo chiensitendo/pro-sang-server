@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run: 
           ssh root@103.82.20.216
-          yes Yes
+      - run: yes Yes
 
 # Orchestrate our job run sequence
 workflows:
