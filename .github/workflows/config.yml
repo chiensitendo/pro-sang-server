@@ -46,7 +46,7 @@ jobs:
       - name: Deploy
         run: |
           scp -p -i ../private.key -o StrictHostKeyChecking=no ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/$FOLDER_NAME
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd $FOLDER_PATH && chmod +x deploy.sh && ./deploy.sh"
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd $FOLDER_PATH && chmod +x deploy.sh && source ./deploy.sh"
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
