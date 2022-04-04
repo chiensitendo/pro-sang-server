@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  deploy_and_build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -54,9 +54,11 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_HOST}}
-      - name: Copy File
+      - name: Deploy
         run: |
-          scp -p -i ../private.key ~/.ssh/known_hosts root@$SSH_KNOWN_HOSTS:/deploy
+          scp -p -i ../private.key ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd ./deploy chmod +x deploy.sh ./deploy.sh"
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "rm ./deploy/deploy.sh" 
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
