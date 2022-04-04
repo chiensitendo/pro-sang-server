@@ -57,8 +57,8 @@ jobs:
       - name: Deploy
         run: |
           scp -p -i ../private.key ./.github/bin/deploy.sh root@$SSH_KNOWN_HOSTS:/deploy
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd ./deploy && chmod +x deploy.sh && ./deploy.sh"
-          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "rm ./deploy/deploy.sh" 
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "cd ../deploy && chmod +x deploy.sh && ./deploy.sh"
+          ssh -i ../private.key -o StrictHostKeyChecking=no -tt root@$SSH_KNOWN_HOSTS "rm ../deploy/deploy.sh" 
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
