@@ -35,10 +35,53 @@ jobs:
            SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
            SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
            SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Pre Deploy
+        run: |
+          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/deploy.sh root@$SSH_HOST:/deploy
+          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/build.sh root@$SSH_HOST:/deploy
+          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/start.sh root@$SSH_HOST:/deploy
+          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/status.sh root@$SSH_HOST:/deploy
+          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/post_deploy.sh root@$SSH_HOST:/deploy
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Check Pre Deploy
+        run: |
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "test -e /deploy/deploy.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "test -e /deploy/build.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "test -e /deploy/start.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "test -e /deploy/status.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "test -e /deploy/post_deploy.sh"
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
       - name: Deploy
         run: |
-          scp -p -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts ./.github/bin/pre-build.sh root@$SSH_HOST:/deploy
-          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x pre-build.sh && source ./pre-build.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x deploy.sh && source ./deploy.sh"
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Build
+        run: |
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x build.sh && source ./build.sh"
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Start Application
+        run: |
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x start.sh && source ./start.sh"
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Check Application Status
+        run: |
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x status.sh && source ./status.sh"
+        shell: bash
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+      - name: Post Deploy
+        run: |
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x post_deploy.sh && source ./post_deploy.sh"
         shell: bash
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
