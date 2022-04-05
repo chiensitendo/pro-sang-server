@@ -1,1 +1,1 @@
-rm -v /deploy/repository/*
+rm -rf /deploy/repository/*
