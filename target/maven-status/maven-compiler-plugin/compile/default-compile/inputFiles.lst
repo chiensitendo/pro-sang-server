@@ -1,6 +1,8 @@
+C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\controllers\GeneralController.java
+C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\dto\response\ApplicationStatus.java
 C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\ProSangServerApplication.java
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\controllers\BasicController.java
 C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\controllers\AccountController.java
+C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\constants\GeneralConstants.java
 C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\entities\Account.java
 C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\ServletInitializer.java
 C:\WORK_SPACE\PROJECTS\pro-sang-server\src\main\java\com\sang\prosangserver\repositories\AccountRepository.java
