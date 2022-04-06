@@ -61,7 +61,7 @@ jobs:
           SSH_HOST: ${{secrets.SSH_HOST}}
       - name: Build
         run: |
-          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x build.sh && source ./build.sh"
+          ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts -tt root@$SSH_HOST "cd /deploy && chmod +x env.sh && source ./env.sh && chmod +x build.sh && source ./build.sh"
         shell: bash
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}

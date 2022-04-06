@@ -78,6 +78,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<environmentVariables>
+		                <ENV1>5000</ENV1>
+		                <ENV2>Some Text</ENV2>
+		                <ENV3/>
+		                <ENV4></ENV4>
+		            </environmentVariables>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
