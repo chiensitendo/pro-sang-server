@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.sang.prosangserver.ProSangServerApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 7.735 s <<< FAILURE! - in com.sang.prosangserver.ProSangServerApplicationTests
-contextLoads  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:postgresql://${PRO_SANG_SERVER_DB_URL}:${PRO_SANG_SERVER_DB_PORT}/${PRO_SANG_SERVER_DATABASE}
-Caused by: javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:postgresql://${PRO_SANG_SERVER_DB_URL}:${PRO_SANG_SERVER_DB_PORT}/${PRO_SANG_SERVER_DATABASE}
-Caused by: java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:postgresql://${PRO_SANG_SERVER_DB_URL}:${PRO_SANG_SERVER_DB_PORT}/${PRO_SANG_SERVER_DATABASE}
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.049 s - in com.sang.prosangserver.ProSangServerApplicationTests

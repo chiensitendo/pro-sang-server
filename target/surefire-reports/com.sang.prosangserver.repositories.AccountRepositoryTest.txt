@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.sang.prosangserver.repositories.AccountRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.617 s - in com.sang.prosangserver.repositories.AccountRepositoryTest
