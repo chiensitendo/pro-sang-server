@@ -4,6 +4,7 @@ name: CI Pro-Deploy
 on:
   workflow_run:
     workflows: ["CI Pro-Build"]
+    branches: [main]
     types:
       - completed
 jobs:
