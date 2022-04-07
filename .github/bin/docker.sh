@@ -7,6 +7,7 @@ sudo chmod 600 ../private.key
 echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
 echo "Deploying via remote SSH"
+echo "$ENVS"
 # ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "root@${SSH_HOST}" \
 #     "docker pull ${DOCKER_HUB_USERNAME}/pro-sang-server:latest" \
 #     "docker stop pro-sang-server-container" \
