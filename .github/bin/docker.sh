@@ -8,7 +8,7 @@ echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
 echo "Deploying via remote SSH"
 ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "root@${SSH_HOST}" \
-  "docker login -u "${DOCKER_HUB_USERNAME}" -p ${DOCKER_HUB_ACCESS_TOKEN}" \
+  "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_ACCESS_TOKEN}" \
   "docker pull ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
   && docker stop live-container \
   && docker rm live-container \
