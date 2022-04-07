@@ -1,0 +1,27 @@
+name: CI Pro-Deploy
+
+# Only trigger, when the build workflow succeeded
+on:
+  workflow_run:
+    workflows: ["CI Pro-Build"]
+    types:
+      - completed
+jobs:
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        run: |
+          bash ./.github/bin/docker.sh
+        shell: bash
+        env:
+           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+           SSH_HOST: ${{secrets.SSH_HOST}}
+           DOCKER_HUB_USERNAME: ${{DOCKER_HUB_USERNAME}}

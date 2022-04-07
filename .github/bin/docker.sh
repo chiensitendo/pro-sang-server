@@ -1,9 +1,15 @@
-docker build \
---build-arg PRO_SANG_SERVER_DATABASE \
---build-arg PRO_SANG_SERVER_DATABASE_PASSWORD \
---build-arg PRO_SANG_SERVER_DATABASE_USERNAME \
---build-arg PRO_SANG_SERVER_DB_PORT \
---build-arg PRO_SANG_SERVER_DB_URL \
--t chiensitendo/pro-sang-server .
+# Stop script on first error
+set -e
+echo "Create SSH key"
+mkdir -p ~/.ssh/
+echo "$SSH_PRIVATE_KEY" > ../private.key
+sudo chmod 600 ../private.key
+echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
-docker run --env-file=.env -p 8080:8080 springio/gs-spring-boot-docker
+echo "Deploying via remote SSH"
+ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "root@${SSH_HOST}" \
+  "docker pull ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
+  && docker stop live-container \
+  && docker rm live-container \
+  && docker run --init -d --name live-container -p 80:8080 ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
+  && docker system prune -af" # remove unused images to free up space
