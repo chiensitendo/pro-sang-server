@@ -27,9 +27,10 @@ jobs:
           ./.github/bin/docker.sh
         shell: bash
         env:
-           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+           PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
            SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
            SSH_HOST: ${{secrets.SSH_HOST}}
            DOCKER_HUB_USERNAME: ${{secrets.DOCKER_HUB_USERNAME}}
            DOCKER_HUB_ACCESS_TOKEN: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
            ENVS: ${{secrets.ENVIROMENTS_FILE}}
+           USER: ${{secrets.USER}}

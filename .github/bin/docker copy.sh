@@ -2,7 +2,7 @@
 set -e
 echo "Create SSH key"
 mkdir -p ~/.ssh/
-echo "$PRIVATE_KEY" > ../private.key
+echo "$SSH_PRIVATE_KEY" > ../private.key
 sudo chmod 600 ../private.key
 echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
@@ -15,7 +15,7 @@ echo "$ENVS"
 #     "docker run --init -d --name pro-sang-server-container -p 8080:8080 --env-file=${ENVS} ${DOCKER_HUB_USERNAME}/pro-sang-server:latest" \
 #     "docker system prune -af" \
 #     "docker ps -a";
-ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "${USER}@${SSH_HOST}" \
+ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "root@${SSH_HOST}" \
   "docker pull ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
   && docker stop pro-sang-server-container \
   && docker rm pro-sang-server-container \
