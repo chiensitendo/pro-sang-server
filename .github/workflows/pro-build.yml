@@ -31,8 +31,7 @@ jobs:
           architecture: x64
           cache: maven
       - name: Check file
-        run:
-          cat /etc/postgresql/*/main/postgresql.conf
+        run: |
           sed -i 's/#listen_addresses/listen_addresses/g' /etc/postgresql/*/main/postgresql.conf
       - name: Run database
         run: |
