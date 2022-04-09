@@ -45,6 +45,8 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
+      - name: Install Postgres
+        run: sudo apt-get update sudo apt-get install postgresql postgresql-contrib
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
         env:
