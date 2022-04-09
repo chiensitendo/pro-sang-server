@@ -37,7 +37,7 @@ jobs:
           cat /etc/postgresql/*/main/postgresql.conf
       - name: Change pg_hba.conf
         run: |
-          sudo sed -i 's/md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
+          sudo sed -i 's/scram-sha-256/trust/g' /etc/postgresql/*/main/pg_hba.conf
           sudo cat /etc/postgresql/*/main/pg_hba.conf
       - name: Run database
         run: |
