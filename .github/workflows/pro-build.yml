@@ -30,9 +30,9 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
-      - name: Change pg_hba.conf
+      - name: Change conenction
         run: |
-          sudo sed -i 's/scram-sha-256/peer/g' /etc/postgresql/*/main/pg_hba.conf
+          sudo sed -i 's/scram-sha-256/md5/g' /etc/postgresql/*/main/pg_hba.conf
           sudo cat /etc/postgresql/*/main/pg_hba.conf
       - name: Run database
         run: |
