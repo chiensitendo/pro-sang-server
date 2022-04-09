@@ -47,8 +47,7 @@ jobs:
           cache: maven
       - name: Create user
         run: |
-          sudo -u postgres createuser test_user
-          echo "test_password" | sudo -u postgres psql
+          sudo -u postgres psql -c "CREATE USER test_user WITH PASSWORD 'test_password'"
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
         env:
