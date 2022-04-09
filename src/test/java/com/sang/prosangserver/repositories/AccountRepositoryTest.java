@@ -38,11 +38,4 @@ public class AccountRepositoryTest {
 		assertThat(accountRepository).isNotNull();
 	}
 	
-	@Test
-	public void testSelectAccount() {
-		List<Account> accounts = accountRepository.findAll();
-		assertThat(accounts).hasSizeGreaterThan(2);
-	}
-	
-
 }
