@@ -30,10 +30,9 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
-      - name: Change conenction
+      - name: Change Conenction
         run: |
-          sudo sed -i 's/scram-sha-256/md5/g' /etc/postgresql/*/main/pg_hba.conf
-          sudo cat /etc/postgresql/*/main/pg_hba.conf
+          sudo sed -i 's/scram-sha-256/trust/g' /etc/postgresql/*/main/pg_hba.conf
       - name: Run database
         run: |
           sudo service postgresql start
@@ -66,4 +65,12 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pro-sang-server:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/pro-sang-server:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/pro-sang-server:buildcache,mode=max
-       
+      -
+        name: Post Change Conenction
+        run: |
+          sudo sed -i 's/trust/scram-sha-256/g' /etc/postgresql/*/main/pg_hba.conf
+      -
+        name: Post Run database
+        run: |
+          sudo -u postgres psql -c "DROP USER IF EXISTS test_user"
+          sudo service postgresql stop
