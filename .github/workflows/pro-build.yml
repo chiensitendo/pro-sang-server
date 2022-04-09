@@ -33,7 +33,7 @@ jobs:
       - name: Check file
         run:
           cat /etc/postgresql/*/main/postgresql.conf
-          sed -i 's/#listen_addresses/listen_addresses/g'
+          sed -i 's/#listen_addresses/listen_addresses/g' /etc/postgresql/*/main/postgresql.conf
       - name: Run database
         run: |
           sudo service postgresql start
