@@ -30,11 +30,6 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
-      - name: Change postgresql
-        run: |
-          sudo sed -i 's/#listen_addresses/listen_addresses/g' /etc/postgresql/*/main/postgresql.conf
-          sudo sed -i "s/'localhost'/'*'/g" /etc/postgresql/*/main/postgresql.conf
-          cat /etc/postgresql/*/main/postgresql.conf
       - name: Change pg_hba.conf
         run: |
           sudo sed -i 's/scram-sha-256/trust/g' /etc/postgresql/*/main/pg_hba.conf
