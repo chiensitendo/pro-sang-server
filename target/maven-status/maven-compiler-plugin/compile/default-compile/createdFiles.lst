@@ -2,7 +2,12 @@ com\sang\prosangserver\controllers\AccountController.class
 com\sang\prosangserver\dto\response\ApplicationStatus.class
 com\sang\prosangserver\controllers\GeneralController.class
 com\sang\prosangserver\repositories\AccountRepository.class
-com\sang\prosangserver\constants\GeneralConstants.class
 com\sang\prosangserver\entities\Account.class
+com\sang\prosangserver\mappers\AccountUserDetailMapper.class
+com\sang\prosangserver\services\AccountService.class
+com\sang\prosangserver\enums\Roles.class
+com\sang\prosangserver\mappers\AccountUserDetailMapperImpl.class
+com\sang\prosangserver\constants\GeneralConstants.class
 com\sang\prosangserver\ProSangServerApplication.class
+com\sang\prosangserver\dto\response\UserDetailResponse.class
 com\sang\prosangserver\ServletInitializer.class

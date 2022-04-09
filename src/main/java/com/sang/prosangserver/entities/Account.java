@@ -1,5 +1,6 @@
 package com.sang.prosangserver.entities;
 
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.sang.prosangserver.enums.Roles;
 
 import lombok.Data;
 
@@ -28,7 +31,7 @@ public class Account {
 	private String username;
 	
 	@Column
-	private Integer role;
+	private Roles role;
 	
 	@Column
 	private Boolean isDeleted = false;
@@ -40,4 +43,5 @@ public class Account {
 	@Column
 	@UpdateTimestamp
 	private LocalDateTime updatedDate;
+	
 }
