@@ -32,7 +32,7 @@ jobs:
           cache: maven
       - name: Check file
         run: |
-          sed -i 's/#listen_addresses/listen_addresses/g' /etc/postgresql/*/main/postgresql.conf
+          sudo sed -i 's/#listen_addresses/listen_addresses/g' /etc/postgresql/*/main/postgresql.conf
       - name: Run database
         run: |
           sudo service postgresql start
