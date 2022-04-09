@@ -30,6 +30,9 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
+      - name: Check file
+        run:
+          ls /etc/postgresql
       - name: Run database
         run: |
           sudo service postgresql start
