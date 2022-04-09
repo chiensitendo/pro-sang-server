@@ -72,5 +72,4 @@ jobs:
       -
         name: Post Run database
         run: |
-          sudo -u postgres psql -c "DROP USER IF EXISTS test_user"
           sudo service postgresql stop
