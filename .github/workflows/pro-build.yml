@@ -32,7 +32,8 @@ jobs:
           cache: maven
       - name: Check file
         run:
-          ls /etc/postgresql
+          cat /etc/postgresql/*/main/postgresql.conf
+          sed -i 's/#listen_addresses/listen_addresses/g'
       - name: Run database
         run: |
           sudo service postgresql start
