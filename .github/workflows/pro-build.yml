@@ -45,11 +45,13 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
-      - name: Create user
+      - name: Install database
         run: |
           sudo apt-get update
           sudo apt-get install postgresql postgresql-contrib
-          sudo systemctl start postgresql.service
+      - name: Run database
+        run: |
+          pg_ctlcluster 12 main start
           sudo -u postgres psql -c "CREATE USER test_user WITH PASSWORD 'test_password'"
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
