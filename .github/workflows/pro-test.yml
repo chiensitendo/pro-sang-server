@@ -31,12 +31,20 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: maven
+      - name: Run database
+        run: |
+          sudo service postgresql start
+          sudo -u postgres psql -c "CREATE USER test_user WITH PASSWORD 'test_password'"
       - name: Test and Build with Maven
         run: mvn --batch-mode --update-snapshots verify
         env:
-          PRO_SANG_SERVER_DATABASE: ${{secrets.PRO_SANG_SERVER_DATABASE}}
-          PRO_SANG_SERVER_DATABASE_PASSWORD: ${{secrets.PRO_SANG_SERVER_DATABASE_PASSWORD}}
-          PRO_SANG_SERVER_DATABASE_USERNAME: ${{secrets.PRO_SANG_SERVER_DATABASE_USERNAME}}
-          PRO_SANG_SERVER_DB_PORT: ${{secrets.PRO_SANG_SERVER_DB_PORT}}
-          PRO_SANG_SERVER_DB_URL: ${{secrets.PRO_SANG_SERVER_DB_URL}}
+          PRO_SANG_SERVER_DATABASE: postgres
+          PRO_SANG_SERVER_DATABASE_PASSWORD: test_password
+          PRO_SANG_SERVER_DATABASE_USERNAME: test_user
+          PRO_SANG_SERVER_DB_PORT: 5432
+          PRO_SANG_SERVER_DB_URL: localhost
+      -
+        name: Post Run database
+        run: |
+          sudo service postgresql stop
        
