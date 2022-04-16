@@ -81,10 +81,10 @@ public class AccountService {
 		}
 		Account acc = requestToEntityMapper.createAccountRequestToAccount(request);
 		acc.setAuth(new AccountAuth());
+		acc.getAuth().setPassword(passwordEncoder.encode(request.getPassword()));
 		Account savedAcc = accountRepository.saveAndFlush(acc);
 		savedAcc.getAuth().setPasswordExpiredTime(LocalDateTime.now().plusMonths(AuthConstants.PASSWORD_EXPIRED_MONTHS));
 		savedAcc.getAuth().setAccount(savedAcc);
-		savedAcc.getAuth().setPassword(passwordEncoder.encode(request.getPassword()));
 		savedAcc.getDetail().setAccount(savedAcc);
 		accountRepository.saveAndFlush(savedAcc);
 		try {
