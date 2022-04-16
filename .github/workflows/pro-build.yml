@@ -42,6 +42,13 @@ jobs:
           PRO_SANG_SERVER_DATABASE_USERNAME: test_user
           PRO_SANG_SERVER_DB_PORT: 5432
           PRO_SANG_SERVER_DB_URL: localhost
+          PRO_SANG_JWT_SECRET: jwt_secret
+          PRO_SANG_JWT_EXPIRED_TIME: 10
+          PRO_SANG_JWT_REFRESH_SECRET: jwt_refresh_token
+          PRO_SANG_JWT_REFRESH_EXPIRED_TIME: 100
+          PRO_SANG_CLIENT_NAME: "Test"
+          PRO_SANG_EMAIL: "email@gmai.com"
+          PRO_SANG_EMAIL_CREDENTIAL: "123456"
       -
         name: Login to Docker Hub
         uses: docker/login-action@v1

@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.sang.prosangserver.entities.Account;
+import com.sang.prosangserver.entities.account.Account;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

@@ -2,7 +2,9 @@ package com.sang.prosangserver.enums;
 
 public enum ErrorMessages {
 	USER_NOTFOUND("user.not_found"),
-	INTERNAL_SERVER_ERROR("internal_server_error");
+	USER_EXISTS("user.exists"),
+	INTERNAL_SERVER_ERROR("internal_server_error"),
+	UNAUTHORIZED("unauthorized");
 	private ErrorMessages(String message) {
 		this.message = message;
 	}
