@@ -18,7 +18,7 @@ public enum Roles {
 		return this.id;
 	}
 	
-	public Roles getRole(int id) {
+	public static Roles getRole(int id) {
 		for (Roles role: Roles.values()) {
 			if (role.getId() == id) {
 				return role;
@@ -26,4 +26,5 @@ public enum Roles {
 		}
 		return null;
 	}
+	
 }

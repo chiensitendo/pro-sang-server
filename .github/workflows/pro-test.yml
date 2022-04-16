@@ -43,6 +43,13 @@ jobs:
           PRO_SANG_SERVER_DATABASE_USERNAME: test_user
           PRO_SANG_SERVER_DB_PORT: 5432
           PRO_SANG_SERVER_DB_URL: localhost
+          PRO_SANG_JWT_SECRET: jwt_secret
+          PRO_SANG_JWT_EXPIRED_TIME: 10
+          PRO_SANG_JWT_REFRESH_SECRET: jwt_refresh_token
+          PRO_SANG_JWT_REFRESH_EXPIRED_TIME: 100
+          PRO_SANG_CLIENT_NAME: "Test"
+          PRO_SANG_EMAIL: ${{secrets.PRO_SANG_EMAIL}}
+          PRO_SANG_EMAIL_CREDENTIAL: ${{secrets.SSH_PRIPRO_SANG_EMAIL_CREDENTIALVATE_KEY}}
       -
         name: Post Run database
         run: |
