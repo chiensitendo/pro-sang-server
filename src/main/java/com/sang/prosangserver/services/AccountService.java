@@ -3,6 +3,8 @@ package com.sang.prosangserver.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,9 @@ public class AccountService {
 	private final PasswordEncoder passwordEncoder;
 	
 	private final SendEmailService sendEmailService;
+	
+	@Value("${debug}")
+	private Boolean isDebug;
 	
 	public AccountService(
 			AccountRepository accountRepository, 
@@ -83,7 +88,9 @@ public class AccountService {
 		savedAcc.getDetail().setAccount(savedAcc);
 		accountRepository.saveAndFlush(savedAcc);
 		try {
-			sendEmailService.sendAccountRegisterMail(savedAcc.getEmail(), savedAcc.getDetail().getLastName());
+			if (!isDebug) {
+				sendEmailService.sendAccountRegisterMail(savedAcc.getEmail(), savedAcc.getDetail().getLastName());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
