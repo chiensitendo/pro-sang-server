@@ -48,8 +48,8 @@ jobs:
           PRO_SANG_JWT_REFRESH_SECRET: jwt_refresh_token
           PRO_SANG_JWT_REFRESH_EXPIRED_TIME: 100
           PRO_SANG_CLIENT_NAME: "Test"
-          PRO_SANG_EMAIL: ${{secrets.PRO_SANG_EMAIL}}
-          PRO_SANG_EMAIL_CREDENTIAL: ${{secrets.SSH_PRIPRO_SANG_EMAIL_CREDENTIALVATE_KEY}}
+          PRO_SANG_EMAIL: "email@gmai.com"
+          PRO_SANG_EMAIL_CREDENTIAL: "123456"
       -
         name: Post Run database
         run: |

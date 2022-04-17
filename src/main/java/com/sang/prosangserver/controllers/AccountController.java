@@ -52,7 +52,7 @@ public class AccountController {
 		return ResponseEntity.ok(ResponseUtils.buildOkResponse(accountService.getAccountDetail(id)));
 	}
 	
-	@PostMapping
+	@PostMapping("/create")
 	@ResponseBody
 	public ResponseEntity<GenericResponse> generateNewAccount(@Valid @RequestBody CreateAccountRequest request) {
 		
