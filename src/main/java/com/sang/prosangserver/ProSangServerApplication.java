@@ -32,7 +32,7 @@ public class ProSangServerApplication {
 	@Bean  
 	public ResourceBundleMessageSource messageSource() {  
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasenames("messages", "error-messages", "email-messages");
+		messageSource.setBasenames("messages", "error-messages", "email-messages", "lyric-messages");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;  
 	}

@@ -68,7 +68,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		
 		return ResponseEntity.status(status)
-				.body(ResponseUtils.buildErrorResponse(status, error));
+				.body(ResponseUtils.buildValidationErrorResponse(status, error));
 	}
 	
 	@ExceptionHandler(value = {DisabledException.class, BadCredentialsException.class, InternalAuthenticationServiceException.class, UnauthorizedException.class})
