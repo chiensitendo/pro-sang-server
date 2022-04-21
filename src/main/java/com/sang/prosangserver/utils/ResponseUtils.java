@@ -37,6 +37,17 @@ public class ResponseUtils {
 	}
 	
 	@SafeVarargs
+	public static GenericResponse buildValidationErrorResponse(HttpStatus status, Map<String, String> ... errors) {
+		GenericResponseBuilder responseBuilder = GenericResponse
+		.builder()
+		.status(status.value());
+		for (Map<String, String> error: errors) {
+			responseBuilder = responseBuilder.validation(error);
+		}
+		return responseBuilder.build();
+	}
+	
+	@SafeVarargs
 	public static String buildErrorResponseJSONString(HttpStatus status, Map<String, String> ... errors) throws JsonProcessingException {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		return ow.writeValueAsString(buildErrorResponse(status, errors));

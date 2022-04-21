@@ -23,5 +23,7 @@ public class GenericResponse implements Serializable {
 	Object body;
 	@Singular
 	List<Map<String, ?>> errors;
-
+	
+	@Singular
+	List<Map<String, ?>> validations;
 }

@@ -1,3 +1,4 @@
+com\sang\prosangserver\mappers\LyricMapperImpl.class
 com\sang\prosangserver\configs\SecurityConfiguration.class
 com\sang\prosangserver\configs\MailConfiguration.class
 com\sang\prosangserver\exceptions\UserNotFoundException.class
