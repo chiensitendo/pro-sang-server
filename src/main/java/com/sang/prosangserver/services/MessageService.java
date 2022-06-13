@@ -1,10 +1,9 @@
 package com.sang.prosangserver.services;
 
+import com.sang.prosangserver.enums.EnumMessageInterface;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-
-import com.sang.prosangserver.enums.ErrorMessages;
 
 @Service
 public class MessageService {
@@ -15,7 +14,7 @@ public class MessageService {
 		this.messageSource = messageSource;
 	}
 	
-	public String getMessage(ErrorMessages message) {
+	public String getMessage(EnumMessageInterface message) {
 		return messageSource.getMessage(message.getMessage(), null, LocaleContextHolder.getLocale());
 	}
 	

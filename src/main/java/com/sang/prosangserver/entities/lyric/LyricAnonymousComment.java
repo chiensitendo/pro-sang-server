@@ -33,6 +33,9 @@ public class LyricAnonymousComment {
 	
 	@Column(nullable = false)
 	private String content;
+
+	@Column
+	private Long likes;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "lyric_id")

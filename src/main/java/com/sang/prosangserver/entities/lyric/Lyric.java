@@ -3,6 +3,7 @@ package com.sang.prosangserver.entities.lyric;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.sang.prosangserver.enums.lyric.LyricStatuses;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,13 +44,19 @@ public class Lyric {
 	
 	@Column
 	private String description;
+
+	@Column
+	private LyricStatuses status = LyricStatuses.PUBLISH;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "account_id")
 	private Account account;
 	
-	@OneToMany(mappedBy = "lyric", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "lyric", cascade = CascadeType.ALL)
 	private List<LyricAnonymousComment> lyricAnonymousComments = new ArrayList<>();
+
+	@OneToMany(mappedBy = "lyric", cascade = CascadeType.ALL)
+	private List<LyricComment> lyricComments = new ArrayList<>();
 
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
@@ -60,4 +68,8 @@ public class Lyric {
 	@Column(nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime updatedDate;
+
+	public List<LyricComment> getValidComments() {
+		return this.lyricComments.stream().filter(lyric -> !lyric.getIsDeleted()).collect(Collectors.toList());
+	}
 }

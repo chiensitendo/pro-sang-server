@@ -1,5 +1,8 @@
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\test\java\com\sang\prosangserver\utils\JwtTokenUtilsTests.java
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\test\java\com\sang\prosangserver\controllers\auth\ChangePasswordAPITest.java
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\test\java\com\sang\prosangserver\ProSangServerApplicationTests.java
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\test\java\com\sang\prosangserver\repositories\AccountRepositoryTest.java
-C:\WORK_SPACE\PROJECTS\pro-sang-server\src\test\java\com\sang\prosangserver\integrations\JWTSecurityTests.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/utils/JwtTokenUtilsTests.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/controllers/auth/ChangePasswordAPITest.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/ProSangServerApplicationTests.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/controllers/lyric/GetLyricDetailTest.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/interfaces/LyricDetailTestInterface.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/integrations/JWTSecurityTests.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/repositories/AccountRepositoryTest.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/test/java/com/sang/prosangserver/utils/DatetimeUtils.java
