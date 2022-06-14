@@ -2,11 +2,14 @@ package com.sang.prosangserver.services;
 
 import java.time.LocalDateTime;
 
+import com.sang.prosangserver.models.AuthUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
 import com.sang.prosangserver.dto.request.ChangePasswordRequest;
@@ -23,6 +26,9 @@ import com.sang.prosangserver.models.JWTToken;
 import com.sang.prosangserver.repositories.AccountRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class AuthService {
@@ -50,7 +56,7 @@ public class AuthService {
 	}
 
 	public LoginResponse login(LoginRequest request) {
-		Authentication auth = null;
+		Authentication auth;
 		try {
 			auth = authenticate(request.getUsername(), request.getPassword());
 			if (!auth.isAuthenticated()) {
@@ -112,17 +118,22 @@ public class AuthService {
 		return new ChangePasswordResponse(acc.getUsername());
 	}
 	
-	public void logout(Long id) {
-		Account acc = getValidAccountById(id);
-		acc.getAuth().setToken(null);
-		acc.getAuth().setTokenExpiredTime(null);
-		acc.getAuth().setRefreshToken(null);
-		acc.getAuth().setRefreshTokenExpiredTime(null);
-		accountRepository.saveAndFlush(acc);
+	public void logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			AuthUser userDetails = (AuthUser) auth.getPrincipal();
+			Account acc = getValidAccountById(userDetails.getId());
+			acc.getAuth().setToken(null);
+			acc.getAuth().setTokenExpiredTime(null);
+			acc.getAuth().setRefreshToken(null);
+			acc.getAuth().setRefreshTokenExpiredTime(null);
+			accountRepository.saveAndFlush(acc);
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
 	}
 	
 	private void validateRefreshToken(Account acc, String refreshToken) {
-		Boolean isValid = false;
+		Boolean isValid;
 		try {
 			String username = jwtService.getUsernameFromRefreshToken(refreshToken);
 			isValid = acc.getUsername().equals(username);
@@ -151,5 +162,14 @@ public class AuthService {
 	public Account getValidAccountById(Long id) {
 		return accountRepository.getOneByIdAndIsDeletedIsFalse(id)
 				.orElseThrow(() -> new UserNotFoundException(messageService.getMessage(ErrorMessages.USER_NOTFOUND)));
+	}
+
+	public AuthUser getAuthUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = auth.getPrincipal();
+		if (!auth.isAuthenticated() ||  !(principal instanceof UserDetails)) {
+			throw new UnauthorizedException();
+		}
+		return (AuthUser) principal;
 	}
 }

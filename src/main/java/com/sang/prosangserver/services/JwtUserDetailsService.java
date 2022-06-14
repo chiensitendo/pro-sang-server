@@ -2,7 +2,7 @@ package com.sang.prosangserver.services;
 
 import java.util.ArrayList;
 
-import org.springframework.security.core.userdetails.User;
+import com.sang.prosangserver.models.AuthUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) {
 		
 		Account account = getValidAccountByUserName(username);
-		return new User(account.getUsername(), account.getAuth().getPassword(), new ArrayList<>());
+		return new AuthUser(account.getUsername(), account.getAuth().getPassword(), new ArrayList<>(), account.getId());
 	}
 	
 	public Account getValidAccountByUserName(String username) {

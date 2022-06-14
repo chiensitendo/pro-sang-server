@@ -2,6 +2,8 @@ package com.sang.prosangserver.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +76,9 @@ public class AccountController {
 	
 	@PostMapping("/logout")
 	@ResponseBody
-	public ResponseEntity<?> logout(@Valid @RequestBody LogoutRequest request) {
+	public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 		
-		authService.logout(request.getId());
+		authService.logout(request, response);
 		return ResponseEntity.ok().build();
 	}
 	

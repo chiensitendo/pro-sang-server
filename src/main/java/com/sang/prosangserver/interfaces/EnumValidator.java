@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.sang.prosangserver.enums.Roles;
+import com.sang.prosangserver.enums.lyric.LyricStatuses;
 
 public class EnumValidator implements ConstraintValidator<EnumValidation, Integer> {
 	
@@ -19,7 +20,12 @@ public class EnumValidator implements ConstraintValidator<EnumValidation, Intege
     		acceptedValues = Stream.of(Roles.values())
                     .map(Roles::getId)
                     .collect(Collectors.toList());
-    	} else {
+    	} else if (annotation.enumClass() == LyricStatuses.class) {
+			acceptedValues = Stream.of(LyricStatuses.values())
+				.map(LyricStatuses::getId)
+				.collect(Collectors.toList());
+		}
+		else {
     		acceptedValues = null;
     	}
     }

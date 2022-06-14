@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sang.prosangserver.exceptions.LyricNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,14 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		error.put("error", ex.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(ResponseUtils.buildErrorResponse(HttpStatus.NOT_FOUND, error));
+	}
+
+	@ExceptionHandler(value = {LyricNotFoundException.class})
+	protected ResponseEntity<GenericResponse> handleLyricNotFoundException(LyricNotFoundException ex) {
+		Map<String, String> error = new HashMap<String, String>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+			.body(ResponseUtils.buildErrorResponse(HttpStatus.NOT_FOUND, error));
 	}
 	
 	@ExceptionHandler(value = {UserExistsException.class})
@@ -81,6 +90,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(value = {Exception.class, RuntimeException.class})
 	public ResponseEntity<GenericResponse> defaultErrorHandler(Exception ex) {
+		ex.printStackTrace();
 		Map<String, String> error = new HashMap<String, String>();
 		error.put("error", messageService.getMessage(ErrorMessages.INTERNAL_SERVER_ERROR));
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -16,4 +16,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	public Optional<Account> getOneByEmailOrUsernameAndIsDeletedIsFalse(String email, String username);
 	public Optional<Account> getOneByUsernameAndIsDeletedIsFalse(String username);
 	public void deleteByUsername(String username);
+
+	public boolean existsAccountByIdAndIsDeletedIsFalse(Long id);
 }
