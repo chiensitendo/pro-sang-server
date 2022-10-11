@@ -21,29 +21,29 @@ public class ProSangServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProSangServerApplication.class, args);
 	}
-	
-	@Bean  
-	public LocaleResolver localeResolver() {  
+
+	@Bean
+	public LocaleResolver localeResolver() {
 		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
 		localeResolver.setDefaultLocale(Locale.US);
-		return localeResolver;  
+		return localeResolver;
 	}
-	
-	@Bean  
-	public ResourceBundleMessageSource messageSource() {  
+
+	@Bean
+	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasenames("messages", "error-messages", "email-messages", "lyric-messages");
+		messageSource.setBasenames("messages", "error-messages", "email-messages", "lyric-messages", "account-messages");
 		messageSource.setDefaultEncoding("UTF-8");
-		return messageSource;  
+		return messageSource;
 	}
-	
+
 	@Bean
 	public LocalValidatorFactoryBean getValidator() {
 	    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 	    bean.setValidationMessageSource(messageSource());
 	    return bean;
 	}
-	
+
 	@Bean
 	public PasswordEncoder encoder() {
 	    return new BCryptPasswordEncoder();

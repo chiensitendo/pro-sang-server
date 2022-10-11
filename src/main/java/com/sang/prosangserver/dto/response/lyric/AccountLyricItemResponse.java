@@ -16,7 +16,7 @@ public class AccountLyricItemResponse {
 	private String title;
 	private String content;
 	private String description;
-	private Double stars;
+	private Double rate;
 	private LyricStatuses status;
 	private Boolean isDeleted = false;
 	private LocalDateTime createdDate;

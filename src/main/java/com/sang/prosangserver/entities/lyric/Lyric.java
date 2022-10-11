@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.sang.prosangserver.enums.lyric.LyricStatuses;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.sang.prosangserver.entities.account.Account;
@@ -28,30 +29,45 @@ import lombok.Data;
 @Entity
 @Table(name = "lyric")
 public class Lyric {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String title;
-	
-	@Column(nullable = false)
+
+	@Column(nullable = false, columnDefinition = "text")
 	private String content;
-	
+
+	@Column
+	private String composers;
+
+	@Column
+	private String singers;
+
+	@Column
+	private String owners;
+
 	@Column
 	private Double stars;
-	
+
 	@Column
+	private Double rate;
+
+	@Column
+	private String rateAccountList;
+
+	@Column(columnDefinition = "text")
 	private String description;
 
 	@Column
 	private LyricStatuses status = LyricStatuses.PUBLISH;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "account_id")
 	private Account account;
-	
+
 	@OneToMany(mappedBy = "lyric", cascade = CascadeType.ALL)
 	private List<LyricAnonymousComment> lyricAnonymousComments = new ArrayList<>();
 
@@ -60,7 +76,7 @@ public class Lyric {
 
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
-	
+
 	@Column(nullable = false)
 	@CreationTimestamp
 	private LocalDateTime createdDate;

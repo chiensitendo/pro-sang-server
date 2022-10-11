@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sang.prosangserver.exceptions.LyricCommentNotFoundException;
+import com.sang.prosangserver.exceptions.LyricException;
 import com.sang.prosangserver.exceptions.LyricNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,9 +31,9 @@ import com.sang.prosangserver.utils.ResponseUtils;
 
 @ControllerAdvice
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
-	
+
 	private final MessageService messageService;
-	
+
 	public ResponseExceptionHandler(MessageService messageService) {
 		this.messageService = messageService;
 	}
@@ -51,7 +53,23 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 			.body(ResponseUtils.buildErrorResponse(HttpStatus.NOT_FOUND, error));
 	}
-	
+
+	@ExceptionHandler(value = {LyricException.class})
+	protected ResponseEntity<GenericResponse> handleLyricException(LyricException ex) {
+		Map<String, String> error = new HashMap<String, String>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ResponseUtils.buildErrorResponse(HttpStatus.BAD_REQUEST, error));
+	}
+
+	@ExceptionHandler(value = {LyricCommentNotFoundException.class})
+	protected ResponseEntity<GenericResponse> handleLyricCommentNotFoundException(LyricCommentNotFoundException ex) {
+		Map<String, String> error = new HashMap<String, String>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+			.body(ResponseUtils.buildErrorResponse(HttpStatus.NOT_FOUND, error));
+	}
+
 	@ExceptionHandler(value = {UserExistsException.class})
 	protected ResponseEntity<GenericResponse> handleUserExistsException(UserExistsException ex) {
 		Map<String, String> error = new HashMap<String, String>();
@@ -59,7 +77,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN)
 				.body(ResponseUtils.buildErrorResponse(HttpStatus.FORBIDDEN, error));
 	}
-	
+
 	@ExceptionHandler(value = InvalidFormatException.class)
 	protected ResponseEntity<GenericResponse> handleDateTimeParseException(InvalidFormatException ex) {
 		Map<String, String> error = new HashMap<String, String>();
@@ -67,7 +85,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(ResponseUtils.buildErrorResponse(HttpStatus.BAD_REQUEST, error));
 	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -75,19 +93,19 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		for(FieldError err: ex.getFieldErrors()) {
 			error.put(err.getField(), err.getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.status(status)
 				.body(ResponseUtils.buildValidationErrorResponse(status, error));
 	}
-	
+
 	@ExceptionHandler(value = {DisabledException.class, BadCredentialsException.class, InternalAuthenticationServiceException.class, UnauthorizedException.class})
 	public ResponseEntity<GenericResponse> handleAuthenticationManagerException(Exception ex) {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				.body(ResponseUtils
-						.buildErrorResponse(HttpStatus.UNAUTHORIZED, 
+						.buildErrorResponse(HttpStatus.UNAUTHORIZED,
 								Collections.singletonMap("error", messageService.getMessage(ErrorMessages.UNAUTHORIZED))));
 	}
-	
+
 	@ExceptionHandler(value = {Exception.class, RuntimeException.class})
 	public ResponseEntity<GenericResponse> defaultErrorHandler(Exception ex) {
 		ex.printStackTrace();
@@ -96,5 +114,5 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(ResponseUtils.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error));
 	}
-	
+
 }
