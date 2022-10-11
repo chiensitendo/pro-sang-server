@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.sang.prosangserver.constants.LyricConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,26 +28,26 @@ import com.sang.prosangserver.utils.ObjectUtils;
 
 @Service
 public class AccountService {
-	
+
 	private final AccountRepository accountRepository;
-	
+
 	private final AccountUserDetailMapper accountUserDetailMapper;
-	
+
 	private final UpdateAccountDetailToAccountDetailMapper updateDetailMapper;
-	
+
 	private final MessageService messageService;
-	
+
 	private final CreateAccountRequestToAccountMapper requestToEntityMapper;
-	
+
 	private final PasswordEncoder passwordEncoder;
-	
+
 	private final SendEmailService sendEmailService;
-	
+
 	@Value("${debug}")
 	private Boolean isDebug;
-	
+
 	public AccountService(
-			AccountRepository accountRepository, 
+			AccountRepository accountRepository,
 			AccountUserDetailMapper accountUserDetailMapper,
 			MessageService messageService,
 			CreateAccountRequestToAccountMapper requestToEntityMapper,
@@ -61,18 +62,18 @@ public class AccountService {
 		this.passwordEncoder = passwordEncoder;
 		this.sendEmailService = sendEmailService;
 	}
-	
+
 	public List<UserDetailResponse> getAccountList() {
 		return accountRepository.findAll().stream()
 				.map(accountUserDetailMapper::accountToUserDetail).collect(Collectors.toList());
 	}
-	
+
 	public UserDetailResponse getAccountDetail(Long id) {
 		Account acc = accountRepository.getOneByIdAndIsDeletedIsFalse(id)
 				.orElseThrow(() -> new UserNotFoundException(messageService.getMessage(ErrorMessages.USER_NOTFOUND)));
 		return accountUserDetailMapper.accountToUserDetail(acc);
 	}
-	
+
 	public CreateAccountResponse createAccount(CreateAccountRequest request) {
 		if(accountRepository
 			.getOneByEmailOrUsernameAndIsDeletedIsFalse(request.getEmail(), request.getUsername())
@@ -83,6 +84,9 @@ public class AccountService {
 		acc.setAuth(new AccountAuth());
 		acc.getAuth().setPassword(passwordEncoder.encode(request.getPassword()));
 		Account savedAcc = accountRepository.saveAndFlush(acc);
+		if (request.getPhotoUrl() == null) {
+			savedAcc.getDetail().setAccountPhotoUrl(LyricConstants.DEFAULT_AVATAR_URL);
+		}
 		savedAcc.getAuth().setPasswordExpiredTime(LocalDateTime.now().plusMonths(AuthConstants.PASSWORD_EXPIRED_MONTHS));
 		savedAcc.getAuth().setAccount(savedAcc);
 		savedAcc.getDetail().setAccount(savedAcc);
@@ -94,10 +98,10 @@ public class AccountService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new CreateAccountResponse(savedAcc.getUsername());
 	}
-	
+
 	public UserDetailResponse updateAccountDetail(Long id, UpdateAccountDetailRequest request) {
 		Account acc = getValidAccountById(id);
 		AccountDetail source = updateDetailMapper.requestToAccountDetail(request);
@@ -105,7 +109,7 @@ public class AccountService {
 		accountRepository.saveAndFlush(acc);
 		return accountUserDetailMapper.accountToUserDetail(acc);
 	}
-	
+
 	public Account getValidAccountById(Long id) {
 		return accountRepository.getOneByIdAndIsDeletedIsFalse(id)
 				.orElseThrow(() -> new UserNotFoundException(messageService.getMessage(ErrorMessages.USER_NOTFOUND)));

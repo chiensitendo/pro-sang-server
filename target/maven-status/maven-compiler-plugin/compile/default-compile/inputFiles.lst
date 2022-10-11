@@ -63,6 +63,7 @@
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/mappers/UpdateAccountDetailToAccountDetailMapper.java
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/services/JwtUserDetailsService.java
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/dto/response/lyric/info/LyricAccountInfo.java
+/home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/dto/response/lyric/LyricListResponse.java
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/dto/response/lyric/info/LyricReplyComment.java
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/interfaces/LyricDbModelInterface.java
 /home/sang.tranminh/study/servers/pro-sang-server/src/main/java/com/sang/prosangserver/interfaces/EnumValidator.java

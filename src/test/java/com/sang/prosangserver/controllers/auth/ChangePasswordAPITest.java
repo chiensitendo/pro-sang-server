@@ -34,23 +34,23 @@ import com.sang.prosangserver.services.JwtService;
 
 @SpringBootTest
 public class ChangePasswordAPITest {
-	
+
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	@Autowired
 	private JwtService jwtService;
-	
+
 	private MockMvc mockMvc;
-	
+
 	private Account account = null;
-	
+
 	private void createAccount() throws Exception {
 		// Create test account
 		Long uuid = Instant.now().toEpochMilli();
@@ -58,13 +58,14 @@ public class ChangePasswordAPITest {
 		String email = uuid + "_change_password_test@gmail.com";
 		Integer role = Roles.USER.getId();
 		String password = "123456";
-		String name = "test name";
-		CreateAccountRequest request = 
-			new CreateAccountRequest(username, email, role, password, name);
+		String firstName = "test";
+		String lastName = "name";
+		CreateAccountRequest request =
+			new CreateAccountRequest(username, email, role, password, firstName, lastName, "");
 		accountService.createAccount(request);
 		account = accountRepository.getOneByEmailOrUsernameAndIsDeletedIsFalse(email, username).orElseThrow();
 	}
-	
+
 	@AfterEach
 	public void rollback() throws Exception {
 		if (account != null) {
@@ -72,7 +73,7 @@ public class ChangePasswordAPITest {
 			account = null;
 		}
 	}
-	
+
 	@BeforeEach
 	public void setUp(WebApplicationContext webApplicationContext) throws Exception {
 		this.mockMvc = MockMvcBuilders
@@ -103,7 +104,7 @@ public class ChangePasswordAPITest {
 				.andReturn();
 		ChangePasswordResponse response = getBody(result, ChangePasswordResponse.class);
 		assertThat(response).isNotNull();
-		
+
 		// Verify New Password
 		LoginRequest loginRequest = new LoginRequest(account.getUsername(), newPassword);
 		this.mockMvc
@@ -113,9 +114,9 @@ public class ChangePasswordAPITest {
 		.andExpect(status().isOk())
 		.andDo(print());
 	}
-	
+
 	protected <T> T getBody(MvcResult result, Class<T> clazz) throws Exception {
-			
+
 			String responseContent = result
 					.getResponse()
 					.getContentAsString(Charset.defaultCharset());
@@ -123,7 +124,7 @@ public class ChangePasswordAPITest {
 			T response = objectMapper.convertValue(genericResponse.getBody(), clazz);
 			return response;
 	}
-	
+
 	protected RequestPostProcessor userToken(String token) {
 		return request -> {
 			request.addHeader("Authorization", "Bearer " + token);

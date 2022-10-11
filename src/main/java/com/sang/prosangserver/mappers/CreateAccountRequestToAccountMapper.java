@@ -12,17 +12,19 @@ import com.sang.prosangserver.enums.Roles;
 
 @Mapper(componentModel = "spring")
 public abstract class CreateAccountRequestToAccountMapper {
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Mappings({
-		@Mapping(target = "detail.lastName", source = "request.name")
+		@Mapping(target = "detail.firstName", source = "request.firstName"),
+		@Mapping(target = "detail.lastName", source = "request.lastName"),
+		@Mapping(target = "detail.accountPhotoUrl", source = "request.photoUrl")
 	})
 	public abstract Account createAccountRequestToAccount(CreateAccountRequest request);
-	
+
 	Roles map(int value) {
         return Roles.getRole(value);
     }
-	
+
 }
