@@ -10,6 +10,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
 			.allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-			.allowedOrigins("http://localhost:3000");
+			.allowedOrigins("http://localhost:3000", "https://pro-sang-app.vercel.app", "https://llyric.vercel.app");
 	}
 }
