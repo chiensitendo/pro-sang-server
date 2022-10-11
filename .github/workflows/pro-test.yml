@@ -50,6 +50,9 @@ jobs:
           PRO_SANG_CLIENT_NAME: "Test"
           PRO_SANG_EMAIL: "email@gmai.com"
           PRO_SANG_EMAIL_CREDENTIAL: "123456"
+          PRO_SSL_ALIAS: "alias"
+          PRO_SSL_KEY_STORE: "key"
+          PRO_SSL_KEY_PASSWORD: "password"
       -
         name: Post Run database
         run: |
