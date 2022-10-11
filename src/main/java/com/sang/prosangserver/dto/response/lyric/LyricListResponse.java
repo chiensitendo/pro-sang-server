@@ -4,13 +4,16 @@ package com.sang.prosangserver.dto.response.lyric;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Builder
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class LyricListResponse {
-    private Long accountId;
-    private List<?> lyrics;
+
+    Long total;
+    List<LyricListItem> items;
 }

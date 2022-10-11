@@ -3,6 +3,7 @@ package com.sang.prosangserver.services;
 import java.time.LocalDateTime;
 
 import com.sang.prosangserver.models.AuthUser;
+import com.sang.prosangserver.utils.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,17 +33,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class AuthService {
-	
+
 	private final JwtService jwtService;
-	
+
 	private final AccountRepository accountRepository;
-	
+
 	private final AuthenticationManager authenticationManager;
-	
+
 	private final MessageService messageService;
-	
+
 	private final PasswordEncoder passwordEncoder;
-	
+
 	public AuthService(JwtService jwtService,
 			AccountRepository accountRepository,
 			AuthenticationManager authenticationManager,
@@ -65,7 +66,7 @@ public class AuthService {
 		} catch (Exception e) {
 			throw new UnauthorizedException();
 		}
-	
+
 		Account acc = getValidAccountByUserName(request.getUsername());
 		final JWTToken accessToken = jwtService.generateAccessToken(acc.getUsername());
 		final JWTToken refreshToken = jwtService.generateRefreshToken(acc.getUsername());
@@ -77,15 +78,17 @@ public class AuthService {
 		accountRepository.saveAndFlush(acc);
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return new LoginResponse(
-				acc.getId(), 
-				acc.getUsername(), 
-				acc.getEmail(), 
+				acc.getId(),
+				acc.getUsername(),
+				acc.getEmail(),
+				StringUtils.getUserName(acc.getDetail().getFirstName(), acc.getDetail().getLastName()).trim(),
+				acc.getDetail().getAccountPhotoUrl(),
 				acc.getAuth().getToken(), acc.getAuth().getTokenExpiredTime(),
 				acc.getAuth().getRefreshToken(), acc.getAuth().getRefreshTokenExpiredTime());
 	}
-	
+
 	public RefreshTokenResponse refreshToken(RefreshTokenRequest request) {
-		
+
 		Account acc = getValidAccountByUserName(request.getUsername());
 		validateRefreshToken(acc, request.getRefreshToken());
 		final JWTToken accessToken = jwtService.generateAccessToken(acc.getUsername());
@@ -99,9 +102,9 @@ public class AuthService {
 				acc.getAuth().getToken(), acc.getAuth().getTokenExpiredTime(),
 				acc.getAuth().getRefreshToken(), acc.getAuth().getRefreshTokenExpiredTime());
 	}
-	
+
 	public ChangePasswordResponse changePassword(Long id, ChangePasswordRequest request) {
-		
+
 		Authentication auth = null;
 		try {
 			auth = authenticate(request.getUsername(), request.getPassword());
@@ -111,13 +114,13 @@ public class AuthService {
 		} catch (Exception e) {
 			throw new UnauthorizedException();
 		}
-		
+
 		Account acc = getValidAccountById(id);
 		acc.getAuth().setPassword(passwordEncoder.encode(request.getNewPassword()));
 		accountRepository.saveAndFlush(acc);
 		return new ChangePasswordResponse(acc.getUsername());
 	}
-	
+
 	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null){
@@ -131,7 +134,7 @@ public class AuthService {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 	}
-	
+
 	private void validateRefreshToken(Account acc, String refreshToken) {
 		Boolean isValid;
 		try {
@@ -149,16 +152,16 @@ public class AuthService {
 			throw new UnauthorizedException();
 		}
 	}
-	
+
 	private Authentication authenticate(String username, String password) {
 		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 	}
-	
+
 	public Account getValidAccountByUserName(String username) {
 		return accountRepository.getOneByUsernameAndIsDeletedIsFalse(username)
 				.orElseThrow(() -> new UserNotFoundException(messageService.getMessage(ErrorMessages.USER_NOTFOUND)));
 	}
-	
+
 	public Account getValidAccountById(Long id) {
 		return accountRepository.getOneByIdAndIsDeletedIsFalse(id)
 				.orElseThrow(() -> new UserNotFoundException(messageService.getMessage(ErrorMessages.USER_NOTFOUND)));
@@ -169,6 +172,21 @@ public class AuthService {
 		Object principal = auth.getPrincipal();
 		if (!auth.isAuthenticated() ||  !(principal instanceof UserDetails)) {
 			throw new UnauthorizedException();
+		}
+		return (AuthUser) principal;
+	}
+
+	public void checkCorrectAccountId(AuthUser user, Long accountId) {
+		if (!user.getId().equals(accountId)) {
+			throw new UnauthorizedException();
+		}
+	}
+
+	public AuthUser getAuthUserButNotRequired() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = auth.getPrincipal();
+		if (!auth.isAuthenticated() ||  !(principal instanceof UserDetails)) {
+			return null;
 		}
 		return (AuthUser) principal;
 	}

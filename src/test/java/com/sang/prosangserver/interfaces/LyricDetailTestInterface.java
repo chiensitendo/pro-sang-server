@@ -5,25 +5,24 @@ import com.sang.prosangserver.dto.response.lyric.LyricCommentItem;
 import com.sang.prosangserver.dto.response.lyric.LyricCommentUserInfo;
 import com.sang.prosangserver.dto.response.lyric.LyricDetailResponse;
 import com.sang.prosangserver.dto.response.lyric.LyricItemResponse;
-import com.sang.prosangserver.dto.response.lyric.LyricListResponse;
+import com.sang.prosangserver.dto.response.lyric.LyricListAccountResponse;
 import com.sang.prosangserver.enums.lyric.LyricStatuses;
 import com.sang.prosangserver.utils.DatetimeUtils;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface LyricDetailTestInterface {
 
-    LyricListResponse EXPECTED_OWN_LYRIC_LIST_1 = getExpectedOwnLyricList1();
-    LyricListResponse EXPECTED_OWN_LYRIC_LIST_2 = getExpectedOwnLyricList2();
+    LyricListAccountResponse EXPECTED_OWN_LYRIC_LIST_1 = getExpectedOwnLyricList1();
+    LyricListAccountResponse EXPECTED_OWN_LYRIC_LIST_2 = getExpectedOwnLyricList2();
 
     LyricDetailResponse EXPECTED_OWN_LYRIC_DETAIL_1 = getExpectedOwnLyricDetail1();
 
-    void testGetOwnLyric() throws Exception;
-
-    void testGetLyricListByAccount() throws Exception;
+//    void testGetOwnLyric() throws Exception;
+//
+//    void testGetLyricListByAccount() throws Exception;
 
     void testGetOwnLyricDetail() throws Exception;
 
@@ -49,25 +48,25 @@ public interface LyricDetailTestInterface {
     }
 
 
-    static LyricListResponse getExpectedOwnLyricList1() {
+    static LyricListAccountResponse getExpectedOwnLyricList1() {
 
         List<AccountLyricItemResponse> ownLyricList = new ArrayList<>();
-        ownLyricList.add(new AccountLyricItemResponse(101L, "Lyric Title 1 of User 1", "Lyric content 1", "Lyric Description 1", 4., LyricStatuses.PUBLISH, false, LocalDateTime.now(), LocalDateTime.now()));
-        ownLyricList.add(new AccountLyricItemResponse(102L, "Lyric Title 2 of User 1", "Lyric content 2", "Lyric Description 2", 3.5, LyricStatuses.HIDDEN, false, LocalDateTime.now(), LocalDateTime.now()));
         ownLyricList.add(new AccountLyricItemResponse(103L, "Lyric Title 3 of User 1", "Lyric content 3", "Lyric Description 3", 2.5, LyricStatuses.PUBLISH, false, LocalDateTime.now(), LocalDateTime.now()));
-        ownLyricList.add(new AccountLyricItemResponse(104L, "Deleted Lyric Title of User 1", "Lyric content 4", "Lyric Description 4", 0., null, true, LocalDateTime.now(), LocalDateTime.now()));
-        return LyricListResponse
+//        ownLyricList.add(new AccountLyricItemResponse(104L, "Deleted Lyric Title of User 1", "Lyric content 4", "Lyric Description 4", 0., null, true, LocalDateTime.now(), LocalDateTime.now()));
+        ownLyricList.add(new AccountLyricItemResponse(102L, "Lyric Title 2 of User 1", "Lyric content 2", "Lyric Description 2", 3.5, LyricStatuses.HIDDEN, false, LocalDateTime.now(), LocalDateTime.now()));
+        ownLyricList.add(new AccountLyricItemResponse(101L, "Lyric Title 1 of User 1", "Lyric content 1", "Lyric Description 1", 4., LyricStatuses.PUBLISH, false, LocalDateTime.now(), LocalDateTime.now()));
+        return LyricListAccountResponse
                 .builder()
                 .accountId(100L)
                 .lyrics(ownLyricList)
                 .build();
     }
 
-    static LyricListResponse getExpectedOwnLyricList2() {
+    static LyricListAccountResponse getExpectedOwnLyricList2() {
 
         List<LyricItemResponse> lyricList = new ArrayList<>();
         lyricList.add(new LyricItemResponse(111L, "Lyric Title 1 of User 2", "Lyric content 1", "Lyric Description 1", 4.4, LocalDateTime.now(), LocalDateTime.now()));
-        return LyricListResponse
+        return LyricListAccountResponse
             .builder()
             .accountId(101L)
             .lyrics(lyricList)
