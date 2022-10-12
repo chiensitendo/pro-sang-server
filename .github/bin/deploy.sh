@@ -11,6 +11,6 @@ ssh -i ../private.key -o UserKnownHostsFile=~/.ssh/known_hosts "${USER}@${HOST}"
   "docker pull ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
   && docker stop pro-sang-server-container \
   && docker rm pro-sang-server-container \
-  && docker run --init -d --name pro-sang-server-container -p 80:80 -p 8080:8080 --env-file=${ENVS} ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
+  && docker run --init -d --name pro-sang-server-container -p 8080:8080 --env-file=${ENVS} ${DOCKER_HUB_USERNAME}/pro-sang-server:latest \
   && docker system prune -af" # remove unused images to free up space
 
