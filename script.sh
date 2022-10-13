@@ -1,1 +1,0 @@
-psql pro-sang pro_sang -h localhost
