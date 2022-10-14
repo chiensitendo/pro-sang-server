@@ -162,6 +162,14 @@ public class LyricService {
 				LyricDetailModel model = optionalLyricDetailModel.get();
 				response = lyricMapper.lyricDetailModelToLyricInfoDetailResponse(model);
 			}
+		} else {
+			Long accId = authUser == null ? -1L: authUser.getId();
+			Optional<LyricDetailModel> optionalLyricDetailModel =
+				lyricRepository.getLyricDetailByTitle(ref.trim(), LyricConstants.MAX_COMMENT_PER_PAGE, accId, "%" + accId + "%");
+			if (optionalLyricDetailModel.isPresent()) {
+				LyricDetailModel model = optionalLyricDetailModel.get();
+				response = lyricMapper.lyricDetailModelToLyricInfoDetailResponse(model);
+			}
 		}
 		if (response == null) {
 			throw new LyricNotFoundException(messageService.getMessage(LyricMessages.LYRIC_NOTFOUND));
