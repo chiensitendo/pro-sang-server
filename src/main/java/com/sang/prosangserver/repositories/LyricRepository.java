@@ -47,6 +47,10 @@ public interface LyricRepository extends JpaRepository<Lyric, Long> {
     Optional<LyricDetailModel> getLyricDetailById(@Param("lyricId") Long lyricId, @Param("limit") Integer limit,
                                                   @Param("accountId") Long accountId, @Param("likeAccountId") String likeAccountId);
 
+    @Query(name = "lyric_detail_query_by_title", nativeQuery = true)
+    Optional<LyricDetailModel> getLyricDetailByTitle(@Param("title") String title, @Param("limit") Integer limit,
+                                                  @Param("accountId") Long accountId, @Param("likeAccountId") String likeAccountId);
+
     @Query(name = "lyric_replied_comment_query", nativeQuery = true)
     List<LyricRepliedCommentModel> getRepliedComments(@Param("commentId") Long lyricId, @Param("limit") Integer limit, @Param("offset") Integer offset, @Param("accountId") Long accountId);
 

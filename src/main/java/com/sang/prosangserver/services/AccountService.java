@@ -78,7 +78,7 @@ public class AccountService {
 		if(accountRepository
 			.getOneByEmailOrUsernameAndIsDeletedIsFalse(request.getEmail(), request.getUsername())
 			.isPresent()) {
-			throw new UserExistsException(messageService.getMessage(ErrorMessages.USER_EXISTS));
+			throw new UserExistsException(messageService.getMessage(ErrorMessages.ACCOUNT_EXISTS));
 		}
 		Account acc = requestToEntityMapper.createAccountRequestToAccount(request);
 		acc.setAuth(new AccountAuth());
@@ -99,7 +99,7 @@ public class AccountService {
 			e.printStackTrace();
 		}
 
-		return new CreateAccountResponse(savedAcc.getUsername());
+		return new CreateAccountResponse(savedAcc.getUsername(), savedAcc.getEmail(), savedAcc.getId(), savedAcc.getCreatedDate(), savedAcc.getUpdatedDate());
 	}
 
 	public UserDetailResponse updateAccountDetail(Long id, UpdateAccountDetailRequest request) {
