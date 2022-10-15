@@ -246,7 +246,7 @@ public class LyricService {
 	public LyricAddCommentResponse addNewComment(LyricAddCommentRequest request) {
 		AuthUser authUser = authService.getAuthUser();
 		authService.checkCorrectAccountId(authUser, request.getAccountId());
-		Optional<Lyric> lyricOpt = lyricRepository.getByIdAndAccountIdAndIsDeletedIsFalse(request.getLyricId(), request.getAccountId());
+		Optional<Lyric> lyricOpt = lyricRepository.getByIdAndIsDeletedIsFalse(request.getLyricId());
 		if (!lyricOpt.isPresent()) {
 			throw new LyricNotFoundException(messageService.getMessage(LyricMessages.LYRIC_NOTFOUND));
 		}
