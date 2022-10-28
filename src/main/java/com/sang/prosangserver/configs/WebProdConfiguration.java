@@ -13,6 +13,6 @@ public class WebProdConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
             .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-            .allowedOrigins("https://pro-sang-app.vercel.app", "https://loinhac-lyric.vercel.app");
+            .allowedOrigins("https://pro-sang-app.vercel.app", "https://loinhac-lyric.vercel.app", "https://bibii.tech", "https://www.bibii.tech");
     }
 }
